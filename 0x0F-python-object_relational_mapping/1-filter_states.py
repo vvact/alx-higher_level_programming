@@ -17,18 +17,13 @@ if __name__ == "__main__":
         db=sys.argv[3]
         )
  # Create a cursor object to execute SQL queries
-    cursor = db.cursor()
+    c = db.cursor()
+    c.execute("""SELECT * FROM states WHERE name
+              LIKE BINARY 'N%'ORDER BY states.id ASC""")
+    mydata = c.fetchall()
 
-    # Execute the SQL query to retrieve states starting with 'N'
-    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY states.id ASC")
-
-    # Fetch all rows
-    rows = cursor.fetchall()
-
-    # Display the results
-    for row in rows:
+    for row in mydata:
         print(row)
 
-    # Close the cursor and database connection
-    cursor.close()
+    c.close()
     db.close()
